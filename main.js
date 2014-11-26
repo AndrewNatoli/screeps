@@ -1,3 +1,8 @@
+// Libs
+var creepTypes = require("creepTypes");
+var creepCosts = require("creepCosts");
+
+// Creep Types
 var harvester = require('harvester');
 var builder   = require("builder");
 var guard     = require("guard");
