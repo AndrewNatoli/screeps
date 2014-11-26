@@ -7,8 +7,7 @@ var harvester = require('harvester');
 var builder   = require("builder");
 var guard     = require("guard");
 
-
-
+// Process our existing creeps
 for (var name in Game.creeps) {
     var creep = Game.creeps[name];
     
@@ -24,3 +23,6 @@ for (var name in Game.creeps) {
             break;
     }
 }
+
+// Population control
+require("population")();
