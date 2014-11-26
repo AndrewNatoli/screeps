@@ -27,12 +27,12 @@ exports.getCost = function(parts){
     return sum;
 }
 
-exports.harvester = function(level){
-    return this.getCost(creepTypes("harvester");
+exports.harvester = function(){
+    return this.getCost(creepTypes("harvester"));
 };
-exports.guard = function(level){
+exports.guard = function(){
     return this.getCost(creepTypes("guard"));
 };
-exports.builder = function(level){
+exports.builder = function(){
     return this.getCost(creepTypes("builder"));
 };
