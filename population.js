@@ -47,18 +47,39 @@ module.exports = function() {
                     if(typeof(newName) == "string") {
                         Memory.creeps[newName].role = typeName;
                     }
+                    return; // Make the creep and move on!
                 }
-            } else {
-                // If we already have creeps of this type... 
+            } 
+
+            // If we already have creeps of this type... 
+            else {
+                // Let's make a harvester!
                 if(typeName == "harvester") {
                     // Make a harvester if we're not under attack and have enough energy
                     if(spawn.room.find(Game.HOSTILE_CREEPS).length < util.count("guard")) {
                         // We need cost to build harvester + half cost of guard
                         if(spawn.energy > ((creepCosts.getCost(creepTypes("guard"))/2) + creepCosts.getCost(creepTypes("harvester")))) {
-                            newName = spawn.createCreep(creepTypes("harvester"));
-                            Memory.creeps[newName].role = "harvester";
+                            // We should have at least 1/2 the guards as we have harvesters if we have more than 4 harvesters
+                            if(util.count("harvester") < 4 || (util.count("harvester") < (util.count("guard")/2))) {
+                                var newName = spawn.createCreep(creepTypes("harvester"));
+                                Memory.creeps[newName].role = "harvester";
+                                return; // Make the creep and move on!
+                            }
                         }
                     }
+                }
+
+                // Let's make a guard!
+                if(typeName == "guard") {
+                    // We need cost to build harvester + cost of guard + half guard
+                    if(spawn.energy > ((creepCosts.getCost(creepTypes("guard"))*1.5) + creepCosts.getCost(creepTypes("harvester")))) {
+                        // Do we have at least two harvesters?
+                        if(util.count("harvester") >= 2) {
+                            var newName = spawn.createCreep(creepTypes("guard"));
+                            Memory.creeps[newName].role = "guard";
+                            return; // Make the creep and move on!   
+                        }
+                    }                   
                 }
             }
         }
