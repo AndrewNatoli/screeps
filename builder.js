@@ -10,12 +10,12 @@
 	if(creep.energy === 0) {
 			creep.moveTo(Game.spawns.Spawn1);
 			Game.spawns.Spawn1.transferEnergy(creep);
+	}
+	else {
+		var target = creep.pos.findNearest(Game.CONSTRUCTION_SITES);
+		if(target !== undefined) {
+			creep.moveTo(target);
+			creep.build(target);
 		}
-		else {
-			var target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
-			if(target !== undefined) {
-				creep.moveTo(target);
-				creep.build(target);
-			}
-		}
+	}
 }
