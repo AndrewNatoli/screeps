@@ -37,7 +37,7 @@ module.exports = function() {
             // Do we not have any of this type?
             if(util.count(typeName) === 0) {
                 // Don't add builders if we don't have guards or harvesters.
-                if(typeName == "builder" && (util.count("harvester") == 0 || util.count("guard") == 0)) {
+                if(typeName == "builder" && (util.count("harvester") === 0 || util.count("guard") === 0)) {
                     continue;
                 }
                 // Can we afford this type?
