@@ -7,6 +7,14 @@
  */
  
   module.exports = function (creep) {
+
+  	// First, see if we're near an enemy. If we are, run away!
+  	var hostiles = creep.pos.findInRange(Game.HOSTILE_CREEPS, 4);
+  	if(hostiles.length > 0) {
+  		creep.moveTo(Game.spawns.Spawn1);
+  		return;
+  	}
+
 	if(creep.energy === 0) {
 			creep.moveTo(Game.spawns.Spawn1);
 			Game.spawns.Spawn1.transferEnergy(creep);
