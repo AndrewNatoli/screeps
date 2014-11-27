@@ -14,7 +14,6 @@ module.exports = function() {
             if(spawn.room.find(Game.HOSTILE_CREEPS).length > 0) {
                 // If our forces are outnumbered...
                 if(spawn.room.find(Game.HOSTILE_CREEPS).length > util.count("guard")) {
-                    console.log("There");
                     // If we can afford a guard, spawn one. Otherwise spawn a harvester.
                     if(spawn.energy > creepCosts.getCost(creepTypes(typeName))) {
                         // Skip this unit if it's not a guard.
@@ -37,8 +36,8 @@ module.exports = function() {
             
             // Do we not have any of this type?
             if(util.count(typeName) === 0) {
-                // Don't add builders if we don't have guards or harvesters.
-                if(typeName == "builder" && (util.count("harvester") === 0 || util.count("guard") === 0)) {
+                // Don't add builders if we don't have guards or harvesters OR if there aren't any construction sites...
+                if(typeName == "builder" && ((util.count("harvester") === 0 || util.count("guard") === 0) || spawn.room.find(Game.CONSTRUCTION_SITES).length === 0)) {
                     continue;
                 }
                 // Can we afford this type?
@@ -47,6 +46,17 @@ module.exports = function() {
                     // Make sure we didn't get an error code then set the role
                     if(typeof(newName) == "string") {
                         Memory.creeps[newName].role = typeName;
+                    }
+                }
+            } else {
+                // If we already have creeps of this type... 
+                if(typeName == "harvester") {
+                    // Make a harvester if we're not under attack and have enough energy
+                    if(spawn.room.find(Game.HOSTILE_CREEPS).length < util.count("guard")) {
+                        // We need cost to build harvester + half cost of guard
+                        if(spawn.energy > ((creepCosts.getCost(creepTypes("guard"))/2) + creepCosts.getCost(creepTypes("harvester")))) {
+                            spawn.createCreep(creepTypes("harvester"));
+                        }
                     }
                 }
             }
