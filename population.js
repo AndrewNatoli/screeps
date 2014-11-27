@@ -55,7 +55,8 @@ module.exports = function() {
                     if(spawn.room.find(Game.HOSTILE_CREEPS).length < util.count("guard")) {
                         // We need cost to build harvester + half cost of guard
                         if(spawn.energy > ((creepCosts.getCost(creepTypes("guard"))/2) + creepCosts.getCost(creepTypes("harvester")))) {
-                            spawn.createCreep(creepTypes("harvester"));
+                            newName = spawn.createCreep(creepTypes("harvester"));
+                            Memory.creeps[newName].role = "harvester";
                         }
                     }
                 }
