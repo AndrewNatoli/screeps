@@ -13,7 +13,8 @@ module.exports = function() {
             // If we're under attack, prioritize guards
             if(spawn.room.find(Game.HOSTILE_CREEPS).length > 0) {
                 // If our forces are outnumbered...
-                if(spawn.room.find(Game.HOSTILE_CREEPS).length > spawn.room.find(Game.MY_CREEPS).length) {
+                if(spawn.room.find(Game.HOSTILE_CREEPS).length > util.count("guard")) {
+                    console.log("There");
                     // If we can afford a guard, spawn one. Otherwise spawn a harvester.
                     if(spawn.energy > creepCosts.getCost(creepTypes(typeName))) {
                         // Skip this unit if it's not a guard.
